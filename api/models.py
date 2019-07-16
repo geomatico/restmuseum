@@ -35,7 +35,7 @@ class McbnProd(models.Model):
     genus = models.CharField(max_length=255)
     family = models.CharField(max_length=255)
     _order = models.CharField(max_length=255)
-    _class = models.CharField(max_length=255)
+    _class = models.CharField(max_length=255, db_column='class')
     phylum = models.CharField(max_length=255)
     kingdom = models.CharField(max_length=255)
     scientificname = models.CharField(max_length=255)
