@@ -90,7 +90,7 @@ DATABASES = {
                                       DB_PASS + '@' +
                                       DB_HOST + ':' +
                                       DB_PORT + '/' +
-                                      DB_NAME)
+                                      DB_NAME, conn_max_age=600)
 }
 
 
@@ -131,3 +131,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# REST_FRAMEWORK
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
