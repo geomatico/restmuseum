@@ -59,7 +59,7 @@ CREATE TABLE public.api_mcbnprod
   genus character varying(255) NOT NULL,
   family character varying(255) NOT NULL,
   _order character varying(255) NOT NULL,
-  _class character varying(255) NOT NULL,
+  class character varying(255) NOT NULL,
   phylum character varying(255) NOT NULL,
   kingdom character varying(255) NOT NULL,
   scientificname character varying(255) NOT NULL,
@@ -118,6 +118,49 @@ CREATE INDEX api_mcbnprod_geom_id
 ```
 
 > :warning: Cualquier diferencia con la tabla actual habrá que actualizar el modelo
+
+## API
+
+### Get family and basis of record
+
+GET `/api/v1/family/Rodentia:Cricetidae/basisofrecord/Fossil/`
+
+RESPONSE
+
+```
+HTTP 200 OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Vary: Accept
+```
+```json
+[
+    {
+        "count": 713,
+        "domain": "Eukaryota",
+        "kingdom": "Animalia",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "_order": "Rodentia",
+        "family": "Cricetidae",
+        "familyid": "Rodentia:Cricetidae",
+        "genus": "Apocricetus",
+        "genusid": "Rodentia:Cricetidae:Apocricetus"
+    },
+    {
+        "count": 35,
+        "domain": "Eukaryota",
+        "kingdom": "Animalia",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "_order": "Rodentia",
+        "family": "Cricetidae",
+        "familyid": "Rodentia:Cricetidae",
+        "genus": "Tragomys",
+        "genusid": "Rodentia:Cricetidae:Tragomys"
+    }
+]
+```
 
 
 
