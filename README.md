@@ -2,9 +2,19 @@
 
 API REST para el museo
 
-## Conexión a la base de datos
+## Puesta en marcha
 
-Crear un archivo `.env` con las variables para la conexión:
+Creamos un virtualenv. Podemos usar [VirtualEnvWrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
+
+`mkvirtualenv restmuseum`
+
+instalamos dependencias
+
+`pip install -r requirements.pip`
+
+> :warning: Deberemos tener la base de datos creada identica a la definida en models
+
+Creamos un archivo `.env` con las variables para la conexión:
 
 | Nombre | Valor |
 |---|---|
@@ -14,9 +24,15 @@ Crear un archivo `.env` con las variables para la conexión:
 | DB_PORT | 5432 |
 | DB_NAME | restmuseum |
 
-y ejecutar
+ejecutamos
 
 `source .env`
+
+y arrancamos
+
+`python manage.py runserver 0.0.0.0:9999`
+
+## Modelo de datos
 
 El modelo de datos genera esta tabla:
 
@@ -161,7 +177,3 @@ Vary: Accept
     }
 ]
 ```
-
-
-
-
