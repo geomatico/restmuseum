@@ -1,6 +1,6 @@
 # REST Museum
 
-API REST para el museo
+API REST para el MCNB
 
 ## Puesta en marcha
 
@@ -14,7 +14,7 @@ instalamos dependencias
 
 > :warning: Deberemos tener la base de datos creada identica a la definida en models
 
-Creamos un archivo `.env` con las variables para la conexión:
+Editamos el archivo `.env` con las variables adecuadas para la conexión:
 
 | Nombre | Valor |
 |---|---|
