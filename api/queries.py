@@ -26,6 +26,55 @@ def get_data_from_database(sql, params):
             for row in cursor.fetchall()
         ]
 
+levels = ["domain", "kingdom", "phylum", "class", "_order", "family", "genus", "species", "subspecies"]
+levelsId = ["domain", "kingdom", "phylum", "class", "_order", "familyid", "genusid", "speciesid", "subspeciesid"]
+
+def get_filters_from_request(request):
+    #print(request.query_params)
+    sql = ""
+
+    #todo: prevent SQL injection
+    for key in request.query_params:
+        sql += " AND "
+        d = { 'field': key, 'value': request.query_params[key]}
+        comparison = """ {field} = '{value}'"""
+        sql += comparison.format(**d)
+    return sql
+
+def get_taxon_where(taxon_id, taxon_level, request):
+    filters = get_filters_from_request(request)
+    comparison = """ {field} = '{value}'"""
+    d = { 'field' : levelsId[taxon_level], 'value': taxon_id }
+    return comparison.format(**d) + filters
+
+def get_fields(taxon_level):
+    #unique values (set instead of list) of levelsId and levels
+    return ",".join(set(levelsId[:taxon_level+2]+levels[:taxon_level+2]))
+
+def get_children_from_taxon(taxon_id, taxon_level, request):
+    """
+    Descripción de lo que hace la consulta.
+
+    :param taxon_level:
+    :param taxon_id:
+    :param filters:
+    :return:
+    """
+
+    sql = """
+    SELECT
+    COUNT(*), {fields}
+    FROM api_mcnbprod
+    WHERE {where}
+    GROUP BY {fields}
+    ORDER BY count(*) DESC
+    """
+
+    d = { 'fields': get_fields(taxon_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
+
+    #print(sql.format(**d))
+
+    return get_data_from_database(sql.format(**d), [taxon_id, taxon_level])
 
 def get_count_from_family_and_basis_of_record(family_id, basis_of_record):
     """
@@ -37,10 +86,10 @@ def get_count_from_family_and_basis_of_record(family_id, basis_of_record):
     """
 
     sql = """
-    SELECT COUNT(*),domain,kingdom,phylum,class,_order,family,familyid,genus,genusid 
-    FROM mcnb_prod 
-    WHERE familyid=%s AND basisofrecord=%s 
-    GROUP BY domain,kingdom,phylum,class,_order,family,familyid,genus,genusid 
+    SELECT COUNT(*),domain,kingdom,phylum,class,_order,family,familyid,genus,genusid
+    FROM api_mcnbprod
+    WHERE familyid=%s AND basisofrecord=%s
+    GROUP BY domain,kingdom,phylum,class,_order,family,familyid,genus,genusid
     ORDER BY count(*) DESC
     """
 

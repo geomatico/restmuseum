@@ -2,18 +2,32 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 
+from api.serializers import JsonSerializer
+
 from api.queries import get_count_from_family_and_basis_of_record
-from api.serializers import FamilyBasisOfRecordSerializer
+from api.queries import get_children_from_taxon
 
-
-class GetThingsFromDataBase(APIView):
+class ApiExample(APIView):
 
     def get(self, request, family_id, basis_of_record):
 
         if family_id and basis_of_record:
             data = get_count_from_family_and_basis_of_record(family_id, basis_of_record)
-            family_serializer = FamilyBasisOfRecordSerializer(data)
+            family_serializer = JsonSerializer(data)
             return Response(family_serializer.to_json(), status=200)
+        else:
+            return Response('Something was wrong!!',
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class TaxonRestApi(APIView):
+
+    def get(self, request, taxon_id, taxon_level):
+
+        if taxon_id and taxon_level:
+            #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            data = get_children_from_taxon(taxon_id, int(taxon_level), request)
+            serializer = JsonSerializer(data)
+            return Response(serializer.to_json(), status=200)
         else:
             return Response('Something was wrong!!',
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)

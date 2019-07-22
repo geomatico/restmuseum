@@ -1,4 +1,4 @@
-class FamilyBasisOfRecordSerializer(object):
+class JsonSerializer(object):
 
     def __init__(self, data):
         self.data = data
@@ -9,4 +9,3 @@ class FamilyBasisOfRecordSerializer(object):
         :return: json
         """
         return self.data
-
