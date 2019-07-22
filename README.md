@@ -2,6 +2,12 @@
 
 API REST para el MCNB
 
+## Requisitos
+
+··* Python 3.6.7 (3.5+) https://docs.djangoproject.com/en/2.2/faq/install/
+··* Django 2.2.3
+··* PostgreSQL 9.6 + PostGIS 2.2
+
 ## Puesta en marcha
 
 Creamos un virtualenv. Podemos usar [VirtualEnvWrapper](https://virtualenvwrapper.readthedocs.io/en/latest/)
