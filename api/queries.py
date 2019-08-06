@@ -36,9 +36,15 @@ def get_filters_from_request(request):
     #todo: prevent SQL injection
     for key in request.query_params:
         sql += " AND "
-        d = { 'field': key, 'value': request.query_params[key]}
-        comparison = """ {field} = '{value}'"""
-        sql += comparison.format(**d)
+        if key == 'circle':
+            params = request.query_params[key].split(',')
+            d = { 'field': key, 'lon': params[0], 'lat': params[1], 'radius': params[2]}
+            comparison = """ ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint({lon},{lat}),4326)::geography, {radius}) """
+            sql += comparison.format(**d)
+        else:
+            d = { 'field': key, 'value': request.query_params[key]}
+            comparison = """ {field} = '{value}'"""
+            sql += comparison.format(**d)
     return sql
 
 def get_taxon_where(taxon_id, taxon_level, request):
