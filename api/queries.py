@@ -90,6 +90,25 @@ def get_children_from_taxon(taxon_id, taxon_level, request):
 
     return get_data_from_database(sql.format(**d), [taxon_id, taxon_level])
 
+def get_values_from_field(field):
+    """
+    Descripción de lo que hace la consulta.
+
+    :param field:
+    :return:
+    """
+
+    sql = """
+    SELECT DISTINCT
+    {field} AS VALUE
+    FROM api_mcnbprod
+    ORDER BY {field}
+    """
+
+    d = { 'field': field }
+
+    return get_data_from_database(sql.format(**d), [field])
+
 def get_count_from_family_and_basis_of_record(family_id, basis_of_record):
     """
     Descripción de lo que hace la consulta.

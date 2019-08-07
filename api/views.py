@@ -4,15 +4,15 @@ from rest_framework.response import Response
 
 from api.serializers import JsonSerializer
 
-from api.queries import get_count_from_family_and_basis_of_record
+from api.queries import get_values_from_field
 from api.queries import get_children_from_taxon
 
-class ApiExample(APIView):
+class UniqueValuesRestApi(APIView):
 
-    def get(self, request, family_id, basis_of_record):
+    def get(self, request, field):
 
-        if family_id and basis_of_record:
-            data = get_count_from_family_and_basis_of_record(family_id, basis_of_record)
+        if field:
+            data = get_values_from_field(field)
             family_serializer = JsonSerializer(data)
             return Response(family_serializer.to_json(), status=200)
         else:
