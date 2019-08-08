@@ -4,8 +4,17 @@ from rest_framework.response import Response
 
 from api.serializers import JsonSerializer
 
+from api.queries import get_minmax_years
 from api.queries import get_values_from_field
 from api.queries import get_children_from_taxon
+
+class MinmaxYearsRestApi(APIView):
+
+    def get(self, request):
+
+        data = get_minmax_years()
+        family_serializer = JsonSerializer(data)
+        return Response(family_serializer.to_json(), status=200)
 
 class UniqueValuesRestApi(APIView):
 

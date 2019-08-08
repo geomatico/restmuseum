@@ -45,13 +45,16 @@ def get_filters_from_request(request):
             d = { 'field': params[0], 'min': params[1], 'max': params[2]}
             comparison = ""
             if params[1] :
-                comparison += """ AND {field} >= '{min}'"""
+                comparison += """ AND {field} >= {min}"""
             if params[2] :
-                comparison += """ AND {field} <= '{max}'"""
+                comparison += """ AND {field} <= {max}"""
             sql += comparison.format(**d)
         else:
             d = { 'field': key, 'value': request.query_params[key]}
             comparison = """ AND {field} = '{value}'"""
+            #numeric values
+            if key in ['year', 'month', 'day']:
+                comparison = """ AND {field} = {value}"""
             sql += comparison.format(**d)
     return sql
 
@@ -109,21 +112,17 @@ def get_values_from_field(field):
 
     return get_data_from_database(sql.format(**d), [field])
 
-def get_count_from_family_and_basis_of_record(family_id, basis_of_record):
+def get_minmax_years():
     """
     Descripción de lo que hace la consulta.
 
-    :param family_id:
-    :param basis_of_record:
     :return:
     """
 
     sql = """
-    SELECT COUNT(*),domain,kingdom,phylum,class,_order,family,familyid,genus,genusid
+    SELECT MAX(YEAR) AS maxyear,
+    MIN(YEAR) AS minyear
     FROM api_mcnbprod
-    WHERE familyid=%s AND basisofrecord=%s
-    GROUP BY domain,kingdom,phylum,class,_order,family,familyid,genus,genusid
-    ORDER BY count(*) DESC
     """
 
-    return get_data_from_database(sql, [family_id, basis_of_record])
+    return get_data_from_database(sql, [])
