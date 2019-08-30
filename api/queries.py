@@ -58,6 +58,33 @@ def get_filters_from_request(request):
             sql += comparison.format(**d)
     return sql
 
+def get_taxon_search(terms):
+    """
+    Descripción de lo que hace la consulta.
+
+    :param terms:
+    :return:
+    """
+    sql = ""
+
+    #todo: prevent SQL injection
+    for i, level in enumerate(levels):
+        if (i < len(levels)-1) : #avoiding last level (subspecies)
+            levelId = levelsId[i]
+            d = { 'terms': terms, 'level': level, 'levelId': levelId, 'i': i }
+            comparison = """
+                SELECT DISTINCT {level} AS label,
+                {levelId} AS id,
+            	{i} AS level
+            	FROM api_mcnbprod
+                WHERE UPPER({level}) LIKE UPPER('{terms}%%')
+                """
+            if( sql ) :
+                sql += " UNION "
+            sql += comparison.format(**d)
+
+    return get_data_from_database(sql + " ORDER BY level, label", [])
+
 def get_taxon_where(taxon_id, taxon_level, request):
     filters = get_filters_from_request(request)
     comparison = """ {field} = '{value}'"""

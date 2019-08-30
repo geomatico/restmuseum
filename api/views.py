@@ -7,6 +7,7 @@ from api.serializers import JsonSerializer
 from api.queries import get_minmax_years
 from api.queries import get_values_from_field
 from api.queries import get_children_from_taxon
+from api.queries import get_taxon_search
 
 class MinmaxYearsRestApi(APIView):
 
@@ -15,6 +16,18 @@ class MinmaxYearsRestApi(APIView):
         data = get_minmax_years()
         family_serializer = JsonSerializer(data)
         return Response(family_serializer.to_json(), status=200)
+
+class SearchRestApi(APIView):
+
+    def get(self, request, terms):
+
+        if terms:
+            data = get_taxon_search(terms)
+            family_serializer = JsonSerializer(data)
+            return Response(family_serializer.to_json(), status=200)
+        else:
+            return Response('Something was wrong!!',
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UniqueValuesRestApi(APIView):
 
