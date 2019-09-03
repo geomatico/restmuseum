@@ -91,11 +91,16 @@ def get_taxon_where(taxon_id, taxon_level, request):
     d = { 'field' : levelsId[taxon_level], 'value': taxon_id }
     return comparison.format(**d) + filters
 
-def get_fields(taxon_level):
-    #unique values (set instead of list) of levelsId and levels
-    return ",".join(set(levelsId[:taxon_level+2]+levels[:taxon_level+2]))
+def get_fields(taxon_level, stats=False):
 
-def get_children_from_taxon(taxon_id, taxon_level, request):
+    if(stats) :
+        #for stats we need only two fields with aliases
+        return levelsId[taxon_level+1]+" AS id,"+levels[taxon_level+1]+" AS name"
+    else :
+        #unique values (set instead of list) of levelsId and levels
+        return ",".join(set(levelsId[:taxon_level+2]+levels[:taxon_level+2]))
+
+def get_children_from_taxon(taxon_id, taxon_level, stats, request):
     """
     Descripción de lo que hace la consulta.
 
@@ -110,11 +115,11 @@ def get_children_from_taxon(taxon_id, taxon_level, request):
     COUNT(*), {fields}
     FROM api_mcnbprod
     WHERE {where}
-    GROUP BY {fields}
+    GROUP BY {fieldsgroup}
     ORDER BY count(*) DESC
     """
 
-    d = { 'fields': get_fields(taxon_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
+    d = { 'fields': get_fields(taxon_level, stats), 'fieldsgroup': get_fields(taxon_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
 
     #print(sql.format(**d))
 

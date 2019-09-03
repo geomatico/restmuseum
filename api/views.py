@@ -41,13 +41,27 @@ class UniqueValuesRestApi(APIView):
             return Response('Something was wrong!!',
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class StatsRestApi(APIView):
+
+    def get(self, request, type, taxon_id, taxon_level):
+
+        if taxon_id and taxon_level:
+            #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            if type=="taxon" :
+                data = get_children_from_taxon(taxon_id, int(taxon_level), True, request)
+            serializer = JsonSerializer(data)
+            return Response(serializer.to_json(), status=200)
+        else:
+            return Response('Something was wrong!!',
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class TaxonRestApi(APIView):
 
     def get(self, request, taxon_id, taxon_level):
 
         if taxon_id and taxon_level:
             #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            data = get_children_from_taxon(taxon_id, int(taxon_level), request)
+            data = get_children_from_taxon(taxon_id, int(taxon_level), False, request)
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
         else:
