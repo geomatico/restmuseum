@@ -50,9 +50,6 @@ class StatsRestApi(APIView):
             #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             if type=="taxon" :
                 data = get_children_from_taxon(taxon_id, int(taxon_level), True, request)
-            elif type=="year" :
-                ## TODO: year stats
-                data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
             else :
                 data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
             serializer = JsonSerializer(data)

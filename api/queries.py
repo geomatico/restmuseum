@@ -115,11 +115,15 @@ def get_stats_from_taxon(taxon_id, taxon_level, type, request):
     COUNT(*), {field} AS name
     FROM api_mcnbprod
     WHERE {where}
+    {year}
     GROUP BY {field}
     ORDER BY count(*) DESC
     """
 
-    d = { 'field': type, 'where': get_taxon_where(taxon_id, taxon_level, request) }
+    #hack for decades (if needed in the future)
+    #cast(cast(year AS integer)/10 as varchar)||'0'
+
+    d = { 'field': type, 'where': get_taxon_where(taxon_id, taxon_level, request), 'year': ' AND YEAR IS NOT NULL' if type=='year' else '' }
 
     return get_data_from_database(sql.format(**d), [taxon_id, taxon_level])
 
