@@ -8,6 +8,7 @@ from api.queries import get_minmax_years
 from api.queries import get_values_from_field
 from api.queries import get_children_from_taxon
 from api.queries import get_taxon_search
+from api.queries import get_stats_from_taxon
 
 class MinmaxYearsRestApi(APIView):
 
@@ -49,6 +50,11 @@ class StatsRestApi(APIView):
             #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             if type=="taxon" :
                 data = get_children_from_taxon(taxon_id, int(taxon_level), True, request)
+            elif type=="year" :
+                ## TODO: year stats
+                data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
+            else :
+                data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
         else:

@@ -91,7 +91,7 @@ def get_taxon_where(taxon_id, taxon_level, request):
     d = { 'field' : levelsId[taxon_level], 'value': taxon_id }
     return comparison.format(**d) + filters
 
-def get_fields(taxon_level, stats=False):
+def get_taxon_fields(taxon_level, stats=False):
 
     if(stats) :
         #for stats we need only two fields with aliases
@@ -100,13 +100,36 @@ def get_fields(taxon_level, stats=False):
         #unique values (set instead of list) of levelsId and levels
         return ",".join(set(levelsId[:taxon_level+2]+levels[:taxon_level+2]))
 
-def get_children_from_taxon(taxon_id, taxon_level, stats, request):
+def get_stats_from_taxon(taxon_id, taxon_level, type, request):
     """
     Descripción de lo que hace la consulta.
 
     :param taxon_level:
     :param taxon_id:
     :param filters:
+    :return:
+    """
+
+    sql = """
+    SELECT
+    COUNT(*), {field} AS name
+    FROM api_mcnbprod
+    WHERE {where}
+    GROUP BY {field}
+    ORDER BY count(*) DESC
+    """
+
+    d = { 'field': type, 'where': get_taxon_where(taxon_id, taxon_level, request) }
+
+    return get_data_from_database(sql.format(**d), [taxon_id, taxon_level])
+
+def get_children_from_taxon(taxon_id, taxon_level, stats, request):
+    """
+    Descripción de lo que hace la consulta.
+
+    :param fields:
+    :param fieldsgroup:
+    :param where:
     :return:
     """
 
@@ -119,7 +142,7 @@ def get_children_from_taxon(taxon_id, taxon_level, stats, request):
     ORDER BY count(*) DESC
     """
 
-    d = { 'fields': get_fields(taxon_level, stats), 'fieldsgroup': get_fields(taxon_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
+    d = { 'fields': get_taxon_fields(taxon_level, stats), 'fieldsgroup': get_taxon_fields(taxon_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
 
     #print(sql.format(**d))
 
