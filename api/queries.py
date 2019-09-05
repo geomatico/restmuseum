@@ -146,10 +146,10 @@ def get_children_from_taxon(taxon_id, taxon_level, mode, request):
     ORDER BY count(*) DESC
     """
 
-    if (mode == "subtaxa") :
-        taxon_fields_level = taxon_level + 1
-    else :
+    if (mode == "taxon") :
         taxon_fields_level = taxon_level
+    else :
+        taxon_fields_level = taxon_level + 1
 
     d = { 'fields': get_taxon_fields(taxon_fields_level, mode), 'fieldsgroup': get_taxon_fields(taxon_fields_level), 'where': get_taxon_where(taxon_id, taxon_level, request) }
 
