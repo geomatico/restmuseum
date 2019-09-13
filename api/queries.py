@@ -76,7 +76,7 @@ def get_taxon_search(terms):
                 SELECT DISTINCT {level} AS label,
                 {levelId} AS id,
             	{i} AS level
-            	FROM api_mcnbprod
+            	FROM mcnb_prod
                 WHERE UPPER({level}) LIKE UPPER('{terms}%%')
                 """
             if( sql ) :
@@ -113,7 +113,7 @@ def get_stats_from_taxon(taxon_id, taxon_level, type, request):
     sql = """
     SELECT
     COUNT(*), {field} AS name
-    FROM api_mcnbprod
+    FROM mcnb_prod
     WHERE {where}
     {year}
     GROUP BY {field}
@@ -140,7 +140,7 @@ def get_children_from_taxon(taxon_id, taxon_level, mode, request):
     sql = """
     SELECT
     COUNT(*), {fields}
-    FROM api_mcnbprod
+    FROM mcnb_prod
     WHERE {where}
     GROUP BY {fieldsgroup}
     ORDER BY count(*) DESC
@@ -168,7 +168,7 @@ def get_values_from_field(field):
     sql = """
     SELECT DISTINCT
     {field} AS VALUE
-    FROM api_mcnbprod
+    FROM mcnb_prod
     ORDER BY {field}
     """
 
@@ -186,7 +186,7 @@ def get_minmax_years():
     sql = """
     SELECT MAX(YEAR) AS maxyear,
     MIN(YEAR) AS minyear
-    FROM api_mcnbprod
+    FROM mcnb_prod
     """
 
     return get_data_from_database(sql, [])
