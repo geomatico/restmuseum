@@ -43,13 +43,13 @@ y arrancamos
 El modelo de datos genera esta tabla:
 
 ```sql
--- Table: public.api_mcbnprod
+-- Table: public.mcnb_prod
 
--- DROP TABLE public.api_mcbnprod;
+-- DROP TABLE public.mcnb_prod;
 
-CREATE TABLE public.api_mcbnprod
+CREATE TABLE public.mcnb_prod
 (
-  id integer NOT NULL DEFAULT nextval('api_mcbnprod_id_seq'::regclass),
+  id SERIAL,
   typestatus character varying(255) NOT NULL,
   identificationqualifier character varying(255) NOT NULL,
   dateidentified character varying(255) NOT NULL,
@@ -121,20 +121,20 @@ CREATE TABLE public.api_mcbnprod
   decimallongitude numeric(19,10) NOT NULL,
   decimallatitude numeric(19,10) NOT NULL,
   geom geometry(Point,4326) NOT NULL,
-  CONSTRAINT api_mcbnprod_pkey PRIMARY KEY (id)
+  CONSTRAINT mcnb_prod_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.api_mcbnprod
+ALTER TABLE public.mcnb_prod
   OWNER TO museum;
 
--- Index: public.api_mcbnprod_geom_id
+-- Index: public.mcnb_prod_geom_id
 
--- DROP INDEX public.api_mcbnprod_geom_id;
+-- DROP INDEX public.mcnb_prod_geom_id;
 
-CREATE INDEX api_mcbnprod_geom_id
-  ON public.api_mcbnprod
+CREATE INDEX mcnb_prod_geom_id
+  ON public.mcnb_prod
   USING gist
   (geom);
 ```
