@@ -4,9 +4,9 @@ API REST para el MCNB
 
 ## Requisitos
 
-··* Python 3.6.7 (3.5+) https://docs.djangoproject.com/en/2.2/faq/install/
-··* Django 2.2.3
-··* PostgreSQL 9.6 + PostGIS 2.2
+* Python 3.6.7 (3.5+) https://docs.djangoproject.com/en/2.2/faq/install/
+* Django 2.2.3
+* PostgreSQL 9.6 + PostGIS 2.2
 
 ## Puesta en marcha
 
@@ -145,7 +145,7 @@ CREATE INDEX api_mcbnprod_geom_id
 
 ### Get family and basis of record
 
-GET `/api/v1/family/Rodentia:Cricetidae/basisofrecord/Fossil/`
+GET `/api/v1/subtaxa/Rodentia/4/`
 
 RESPONSE
 
@@ -158,28 +158,164 @@ Vary: Accept
 ```json
 [
     {
-        "count": 713,
+        "count": 850,
+        "family": "Cricetidae",
+        "_order": "Rodentia",
         "domain": "Eukaryota",
-        "kingdom": "Animalia",
         "phylum": "Chordata",
         "class": "Mammalia",
-        "_order": "Rodentia",
-        "family": "Cricetidae",
-        "familyid": "Rodentia:Cricetidae",
-        "genus": "Apocricetus",
-        "genusid": "Rodentia:Cricetidae:Apocricetus"
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Cricetidae"
     },
     {
-        "count": 35,
+        "count": 609,
+        "family": "Gliridae",
+        "_order": "Rodentia",
         "domain": "Eukaryota",
-        "kingdom": "Animalia",
         "phylum": "Chordata",
         "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Gliridae"
+    },
+    {
+        "count": 449,
+        "family": "Muridae",
         "_order": "Rodentia",
-        "family": "Cricetidae",
-        "familyid": "Rodentia:Cricetidae",
-        "genus": "Tragomys",
-        "genusid": "Rodentia:Cricetidae:Tragomys"
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Muridae"
+    },
+    {
+        "count": 236,
+        "family": "Sciuridae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Sciuridae"
+    },
+    {
+        "count": 6,
+        "family": "",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:"
+    },
+    {
+        "count": 5,
+        "family": "Anomaluridae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Anomaluridae"
+    },
+    {
+        "count": 3,
+        "family": "Cuniculidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Cuniculidae"
+    },
+    {
+        "count": 2,
+        "family": "Erethizontidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Erethizontidae"
+    },
+    {
+        "count": 2,
+        "family": "Bathyergidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Bathyergidae"
+    },
+    {
+        "count": 1,
+        "family": "Caviidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Caviidae"
+    },
+    {
+        "count": 1,
+        "family": "Dasyproctidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Dasyproctidae"
+    },
+    {
+        "count": 1,
+        "family": "Dipodidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Dipodidae"
+    },
+    {
+        "count": 1,
+        "family": "Castoridae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Castoridae"
+    },
+    {
+        "count": 1,
+        "family": "Hydrochaeridae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Hydrochaeridae"
+    },
+    {
+        "count": 1,
+        "family": "Myocastoridae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Myocastoridae"
+    },
+    {
+        "count": 1,
+        "family": "Spalacidae",
+        "_order": "Rodentia",
+        "domain": "Eukaryota",
+        "phylum": "Chordata",
+        "class": "Mammalia",
+        "kingdom": "Animalia",
+        "familyid": "Rodentia:Spalacidae"
     }
 ]
 ```
