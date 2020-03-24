@@ -32,11 +32,11 @@ Editamos el archivo `.env` con las variables adecuadas para la conexión:
 
 ejecutamos
 
-`source .env`
+`source .env` (o setear las variables de entorno con otro sistema)
 
 y arrancamos
 
-`python manage.py runserver 0.0.0.0:9999`
+`gunicorn -b 0.0.0.0:9999 restmuseum.wsgi`
 
 ## Modelo de datos
 
@@ -138,8 +138,6 @@ CREATE INDEX mcnb_prod_geom_id
   USING gist
   (geom);
 ```
-
-> :warning: Cualquier diferencia con la tabla actual habrá que actualizar el modelo
 
 ## API
 
