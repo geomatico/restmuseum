@@ -69,7 +69,8 @@ def get_taxon_search(terms):
 
     #todo: prevent SQL injection
     for i, level in enumerate(levels):
-        if (i < len(levels)-1) : #avoiding last level (subspecies)
+        if (i < len(levels)) : #include last level (subspecies)
+            # len(levels)-1 : to avoid last level (subspecies)
             levelId = levelsId[i]
             d = { 'terms': terms, 'level': level, 'levelId': levelId, 'i': i }
             comparison = """
