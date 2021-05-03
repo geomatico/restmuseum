@@ -49,6 +49,9 @@ def get_filters_from_request(request):
             if params[2] :
                 comparison += """ AND {field} <= {max}"""
             sql += comparison.format(**d)
+        elif key == 'limit':
+            #do nothing
+            pass
         else:
             d = { 'field': key, 'value': request.query_params[key]}
             comparison = """ AND {field} = '{value}'"""

@@ -46,12 +46,16 @@ class StatsRestApi(APIView):
 
     def get(self, request, type, taxon_id, taxon_level):
 
+        limit = int(request.query_params['limit']) if (request.query_params and request.query_params['limit']) else 0
         if taxon_id and taxon_level:
             #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             if type=="taxon" :
                 data = get_children_from_taxon(taxon_id, int(taxon_level), "stats", request)
             else :
                 data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
+            #if we want less results
+            if(int(limit)):
+                data = data[0:(limit)]
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
         else:
