@@ -46,7 +46,7 @@ class StatsRestApi(APIView):
 
     def get(self, request, type, taxon_id, taxon_level):
 
-        limit = int(request.query_params['limit']) if (request.query_params and request.query_params['limit']) else 0
+        limit = request.query_params['limit'] if ('limit' in request.query_params) else 0
         if taxon_id and taxon_level:
             #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             if type=="taxon" :
