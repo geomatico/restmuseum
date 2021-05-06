@@ -54,7 +54,13 @@ class StatsRestApi(APIView):
             else :
                 data = get_stats_from_taxon(taxon_id, int(taxon_level), type, request)
             #if we want less results
-            if(int(limit)):
+            try:
+                limit = int(limit)
+            except ValueError:
+                return Response('Limit param should be a number',
+                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            if(limit):
                 data = data[0:(limit)]
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
@@ -67,7 +73,6 @@ class TaxonRestApi(APIView):
     def get(self, request, taxon_id, taxon_level):
 
         if taxon_id and taxon_level:
-            #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             data = get_children_from_taxon(taxon_id, int(taxon_level), "taxon", request)
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
@@ -80,7 +85,6 @@ class SubtaxaRestApi(APIView):
     def get(self, request, taxon_id, taxon_level):
 
         if taxon_id and taxon_level:
-            #if not int(taxon_level) : Response('Taxon_level should be a number', status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             data = get_children_from_taxon(taxon_id, int(taxon_level), "subtaxa", request)
             serializer = JsonSerializer(data)
             return Response(serializer.to_json(), status=200)
